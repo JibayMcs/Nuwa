@@ -20,9 +20,31 @@ class TemplateResource extends Resource
 {
     protected static ?string $model = Template::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentDuplicate;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Nuwa';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('nuwa::nuwa.navigation.templates');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('nuwa::nuwa.models.template');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('nuwa::nuwa.models.templates');
+    }
 
     public static function form(Schema $schema): Schema
     {

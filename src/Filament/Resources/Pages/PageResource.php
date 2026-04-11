@@ -23,9 +23,31 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Nuwa';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('nuwa::nuwa.navigation.pages');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('nuwa::nuwa.models.page');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('nuwa::nuwa.models.pages');
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -18,9 +18,31 @@ class MenuResource extends Resource
 {
     protected static ?string $model = Menu::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBars3;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Nuwa';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('nuwa::nuwa.navigation.menus');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('nuwa::nuwa.models.menu');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('nuwa::nuwa.models.menus');
+    }
 
     public static function form(Schema $schema): Schema
     {
