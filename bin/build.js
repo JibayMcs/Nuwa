@@ -1,4 +1,5 @@
 import esbuild from 'esbuild'
+import { execSync, spawn } from 'child_process'
 
 const isDev = process.argv.includes('--dev')
 
@@ -45,8 +46,39 @@ const defaultOptions = {
 
 compile({
     ...defaultOptions,
-    entryPoints: ['./resources/js/index.js'],
+    entryPoints: ['./resources/js/index.ts'],
     outfile: './resources/dist/nuwa.js',
 }).then(() => {
     console.log(`Build completed for nuwa.js`)
 })
+
+compile({
+    ...defaultOptions,
+    entryPoints: ['./resources/js/editor/index.ts'],
+    outfile: './resources/dist/nuwa-editor.js',
+}).then(() => {
+    console.log(`Build completed for nuwa-editor.js`)
+})
+
+// CSS build via Tailwind CSS v4 CLI
+const cssInput = './resources/css/index.css'
+const cssOutput = './resources/dist/nuwa.css'
+
+if (isDev) {
+    const tailwind = spawn('npx', ['tailwindcss', '-i', cssInput, '-o', cssOutput, '--watch'], {
+        stdio: 'inherit',
+        shell: true,
+    })
+
+    tailwind.on('error', (err) => {
+        console.error(`Tailwind CSS watch error: ${err.message}`)
+    })
+} else {
+    try {
+        execSync(`./node_modules/.bin/tailwindcss -i ${cssInput} -o ${cssOutput} --minify`, { stdio: 'inherit' })
+        console.log(`Build completed for nuwa.css`)
+    } catch (err) {
+        console.error(`Tailwind CSS build failed`)
+        process.exit(1)
+    }
+}

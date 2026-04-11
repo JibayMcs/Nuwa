@@ -2,6 +2,10 @@
 
 namespace JibayMcs\Nuwa;
 
+use JibayMcs\Nuwa\Filament\Resources\Blocks\BlockResource;
+use JibayMcs\Nuwa\Filament\Resources\Menus\MenuResource;
+use JibayMcs\Nuwa\Filament\Resources\Pages\PageResource;
+use JibayMcs\Nuwa\Filament\Resources\Templates\TemplateResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
@@ -14,7 +18,12 @@ class NuwaPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel->resources([
+            PageResource::class,
+            BlockResource::class,
+            TemplateResource::class,
+            MenuResource::class,
+        ]);
     }
 
     public function boot(Panel $panel): void
